@@ -1,0 +1,3 @@
+[submodule "librdfa"]
+	path = librdfa
+	url = git@github.com:rdfa/librdfa.git
