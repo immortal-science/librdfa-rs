@@ -9,8 +9,10 @@ fn main() {
     println!("cargo:rerun-if-changed=wrapper.c");
 
     cc::Build::new()
+        .file("wrapper.c")
         .include("./librdfa/c")
-        .compile("librdfa");
+        .include("/usr/include/libxml2")
+        .compile("rdfa");
 
     // The bindgen::Builder is the main entry point
     // to bindgen, and lets you build up options for
@@ -18,7 +20,8 @@ fn main() {
     let bindings = bindgen::Builder::default()
         // The input header we would like to generate
         // bindings for.
-        .header("wrapper.c")
+        .header("wrapper.h")
+        .clang_arg("-I/usr/include/libxml2")
         // Tell cargo to invalidate the built crate whenever any of the
         // included header files changed.
         .parse_callbacks(Box::new(bindgen::CargoCallbacks))
