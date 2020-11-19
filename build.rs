@@ -9,7 +9,7 @@ fn main() {
     println!("cargo:rerun-if-changed=wrapper.h");
 
     cc::Build::new()
-        .file("wrapper.c")
+        .file("wrapper.h")
         .include("./librdfa/c")
         .include("/usr/include/libxml2")
         .compile("rdfa");
