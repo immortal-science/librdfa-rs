@@ -1,2 +1,2 @@
 #include "librdfa/c/rdfa.h"
-#include <rdfa_utils.h>
+#include "librdfa/c/rdfa_utils.h"
