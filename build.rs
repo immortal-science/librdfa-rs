@@ -1,15 +1,16 @@
 extern crate bindgen;
+extern crate cc;
 
 use std::env;
 use std::path::PathBuf;
 
 fn main() {
-    // Tell cargo to tell rustc to link the system bzip2
-    // shared library.
-    println!("cargo:rustc-link-lib=bz2");
-
     // Tell cargo to invalidate the built crate whenever the wrapper changes
-    println!("cargo:rerun-if-changed=wrapper.h");
+    println!("cargo:rerun-if-changed=wrapper.c");
+
+    cc::Build::new()
+        .include("./librdfa/c")
+        .compile("librdfa");
 
     // The bindgen::Builder is the main entry point
     // to bindgen, and lets you build up options for
@@ -17,7 +18,7 @@ fn main() {
     let bindings = bindgen::Builder::default()
         // The input header we would like to generate
         // bindings for.
-        .header("wrapper.h")
+        .header("wrapper.c")
         // Tell cargo to invalidate the built crate whenever any of the
         // included header files changed.
         .parse_callbacks(Box::new(bindgen::CargoCallbacks))
