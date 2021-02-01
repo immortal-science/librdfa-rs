@@ -9,7 +9,7 @@ fn main() {
     println!("cargo:rerun-if-changed=wrapper.h");
 
     cc::Build::new()
-        .file("wrapper.h")
+        .file("wrapper.c")
         .include("./librdfa/c")
         .include("/usr/include/libxml2")
         .compile("rdfa");
@@ -20,7 +20,7 @@ fn main() {
     let bindings = bindgen::Builder::default()
         // The input header we would like to generate
         // bindings for.
-        .header("wrapper.h")
+        .header("wrapper.c")
         .clang_arg("-I/usr/include/libxml2")
         // Tell cargo to invalidate the built crate whenever any of the
         // included header files changed.
